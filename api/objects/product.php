@@ -1,5 +1,22 @@
 class Product
 {
+//read products
+    public function read()
+    {
+        //select query
+        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.created,p.category_id
+                    FROM " . $this->table_name . " p
+                    LEFT JOIN categories c ON p.category_id = c.id
+                    ORDER BY p.created DESC";
+
+        //prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        //execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
 
     //Database connection and table name
     private $conn;
